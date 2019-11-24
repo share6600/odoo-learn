@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+   <record id ="dietfact_product_template_tree_view" model= "ir.ui.view">
+   <field name="inherit_id" ref="product.product_template_tree_view"/>
+   <field name="model">product.template</field>
+   <field name="arch" type= "xml">
+
+          <xpath expr="/tree/field[@name='default_code']" position="before">
+          <field name="calories"/>
+          <field name="servingsize"/>
+          <field name="lastupdated"/>
+          </xpath>
+
+     </field>
+   </record>
+
+
+<record id="dietfact_product_template_form_view" model="ir.ui.view">
+   <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <field name="model">product.template</field>
+    <field name="arch" type="xml">
+
+
+        <xpath expr="//field[@name='list_price']" position="after">
+
+          <field name="calories"/>
+          <field name="servingsize"/>
+          <field name="lastupdated"/>
+        </xpath>
+    </field>
+</record>
+
+
+        <record id="product.product_template_action_dietfacts" model="ir.actions.act_window">
+        <field name="name">Diet Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="product.product_template_tree_view"/>
+        <field name="context">{"search_default_filter_to_sell":1 ,"default_dietitem" : True }</field>
+        <field name="domain">[('categ_id.name','=','Diet Item')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Diet Item.
+            </p>
+        </field>
+    </record>
+
+        <record id="meal_action_dietfacts" model="ir.actions.act_window">
+        <field name="name">Meals</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.users.meal</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_type">form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new Meal.
+            </p>
+        </field>
+    </record>
+
+    <record id="dietfact_meal_form_view" model="ir.ui.view">
+    <field name="model">res.users.meal</field>
+    <field name="view_type">form</field>
+    <field name="arch" type="xml">
+
+        <form>
+         <group>
+            <field name="name"/>
+          <field name="meal_date"/>
+          <field name="user_id"/>
+          <field name="notes"/>
+           <field name="totalcalories"/>
+           <field name="totalservings"/>
+
+         </group>
+            <notebook>
+                <page name="mealitems" string="Meal Items">
+                    <field name="item_ids" widget="one2many_list">
+                        <tree string="Menu Items" editable="bottom" version="7.0">
+                            <field name="item_id"/>
+                             <field name="servings"/>
+                             <field name="notes"/>
+                             <field name="calories"/>
+                        </tree>
+
+                    </field>
+
+                </page>
+            </notebook>
+
+        </form>
+    </field>
+</record>
+
+
+        <record id="dietfact_meal_tree_view" model="ir.ui.view">
+        <field name="name">Our Meals</field>
+        <field name="model">res.users.meal</field>
+        <field name="arch" type="xml">
+            <tree>
+          <field name="name"/>
+          <field name="meal_date"/>
+          <field name="user_id"/>
+          <field name="notes"/>
+           <field name="totalcalories" sum="Total Calories"/>
+           <field name="totalservings"/>
+            </tree>
+
+
+         </field>
+         </record>
+
+    <menuitem action="product.product_template_action_dietfacts" id="menu_product_template_action_dietfacts" parent="sales_team.menu_sales" sequence="14" />
+
+    <menuitem action="meal_action_dietfacts" id="menu_meal_action_dietfacts" parent="sales_team.menu_sales" sequence="15" />
+
+
+</odoo>
+

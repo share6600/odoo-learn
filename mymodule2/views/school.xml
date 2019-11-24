@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="school_form_view" model="ir.ui.view">
+        <field name="name">school california</field>
+        <field name="model">school.new</field>
+        <field name="arch" type="xml">
+        <form>
+            <sheet>
+              <group>
+        <field name="name" />
+        <field name="roll_no"/>
+        <field name="devition"/>
+            </group>
+            </sheet>
+
+
+        </form>
+        </field>
+
+    </record>
+
+            <record id="school_tree_view" model="ir.ui.view">
+        <field name="name">school california</field>
+        <field name="model">school.new</field>
+        <field name="arch" type="xml">
+        <tree>
+        <field name="name" />
+        <field name="roll_no"/>
+        <field name="devition"/>
+        </tree>
+        </field>
+
+    </record>
+            <record id="action_school_form" model="ir.actions.act_window">
+            <field name="name">school california</field>
+            <field name="res_model">school.new</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add an account.
+              </p><p>
+                An account is part of a ledger allowing your company
+                to register all kinds of debit and credit transactions.
+                Companies present their annual accounts in two main parts: the
+                balance sheet and the income statement (profit and loss
+                account). The annual accounts of a company are required by law
+                to disclose a certain amount of information.
+              </p>
+            </field>
+
+        </record>
+
+        <menuitem
+           id="school_parent_menu"
+           name="school"/>
+        <menuitem
+           id="classroom_menu"
+           name="classroom"
+           parent="school_parent_menu"
+           action="action_school_form"
+        />
+
+</odoo>
