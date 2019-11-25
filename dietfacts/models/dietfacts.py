@@ -42,3 +42,17 @@ class DietFacts_res_users_mealitem(models.Model):
    servings=fields.Float("Servings")
    calories=fields.Integer(related="item_id.calories",string="calories per serving",store="True",readonly="True")
    notes=fields.Text("Meal Item Notes")
+
+class DietFacts_product_nutrient(models.Model):
+   _name='product.nutrient'
+   name = fields.Char("Nutrient Name")
+   uom_id=fields.Many2one("product.uom")
+   description=fields.Text("Description")
+
+
+class nutrientproducttemplate(models.Model):
+   __name='product.template.nutrient'
+   product_id = fields.Many2one("product.template")
+   nutrient_id=fields.Many2one("product.nutrient",string="Product Nutrient")
+   value =fields.Float('Nutrient Value')
+   dailypercent=fields.Float("Daily Recomended Value")

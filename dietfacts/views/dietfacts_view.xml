@@ -15,8 +15,7 @@
      </field>
    </record>
 
-
-<record id="dietfact_product_template_form_view" model="ir.ui.view">
+    <record id="dietfact_product_template_form_view" model="ir.ui.view">
    <field name="inherit_id" ref="product.product_template_only_form_view"/>
     <field name="model">product.template</field>
     <field name="arch" type="xml">
@@ -79,7 +78,7 @@
             <notebook>
                 <page name="mealitems" string="Meal Items">
                     <field name="item_ids" widget="one2many_list">
-                        <tree string="Menu Items" editable="bottom" version="7.0">
+                        <tree string="Menu Items" editable="bottom">
                             <field name="item_id"/>
                              <field name="servings"/>
                              <field name="notes"/>
