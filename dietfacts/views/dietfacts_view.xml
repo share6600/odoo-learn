@@ -149,5 +149,29 @@
     <menuitem action="nutrien_action_dietfacts" id="menu_nutrien_action_dietfacts" parent="sales_team.menu_sales"
               sequence="16"/>
 
+    <template id="product.nutrietion">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout"/>
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <h1>Nutrition Report</h1>
+                    <h2>Product Name: <span t-field="o.name"/></h2>
+                    <h2>Calories: <span t-field="o.calories"/></h2>
+                    <h2>Nutrition Score: <span t-field="o.nutrientscore"/></h2>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+        <report 
+            id="dietfacts_order"
+            string="Nutrient Products"
+            model="product.template"
+            report_type="qweb-pdf"
+            file="product.nutrietion"
+            name="product.nutrietion"
+        />
 </odoo>
 
