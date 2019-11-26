@@ -26,6 +26,8 @@
                 <field name="calories"/>
                 <field name="servingsize"/>
                 <field name="lastupdated"/>
+                <field name="nutrientscore"/>
+
             </xpath>
 
             <page name="sales" position="after">
@@ -35,6 +37,7 @@
                             <field name="nutrient_id"/>
                             <field name="value"/>
                             <field name="dailypercent"/>
+                            <field name="uom"/>
                         </tree>
                     </field>
                 </page>
@@ -84,6 +87,7 @@
                     <field name="user_id"/>
                     <field name="notes"/>
                     <field name="totalcalories"/>
+                    <field name="largemeal"/>
                     <field name="totalservings"/>
 
                 </group>

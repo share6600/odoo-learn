@@ -11,6 +11,19 @@ class DietFacts_product_template(models.Model):
     dietitem = fields.Boolean('Diet Item')
     nutrient_ids = fields.One2many('nutrientproducttemplate.nutrient','product_id','Nutrients')
 
+    @api.one
+    @api.depends('nutrient_ids', 'nutrient_ids.value')
+    def _calcnutrientscore(self):
+        currentscore = 0
+        for nutrient in self.nutrient_ids:
+            if nutrient.nutrient_id.name == 'Sodium':
+              currentscore = currentscore + (nutrient.value/2)
+        self.nutrientscore = currentscore
+
+    nutrientscore = fields.Float(string="Nutrient Score", store="True", compute="_calcnutrientscore")
+
+
+
 
 class DietFacts_res_users_meal(models.Model):
     _name = 'res.users.meal'
@@ -19,6 +32,14 @@ class DietFacts_res_users_meal(models.Model):
     item_ids = fields.One2many('res.users.mealitem', 'meal_id')
     user_id = fields.Many2one('res.users')
     notes = fields.Text("Meal Description")
+    largemeal=fields.Boolean('Large Meal',readonly="True")
+
+    @api.onchange('totalcalories')
+    def check_largemeal(self):
+        if self.totalcalories > 500:
+            self.largemeal= True
+        else:
+            self.largemeal= False
 
     @api.one
     @api.depends('item_ids', 'item_ids.servings')
@@ -61,4 +82,5 @@ class DietFacts_nutrientproducttemplate(models.Model):
     nutrient_id = fields.Many2one('product.nutrient',string="Product Nutrient")
     product_id = fields.Many2one('product.template')
     value = fields.Float('Nutrient Value')
+    uom=fields.Char(related="nutrient_id.uom_id.name",readonly="True",string="UOM")
     dailypercent = fields.Float("Daily Recommended Value")
